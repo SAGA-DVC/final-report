@@ -1,0 +1,36 @@
+Text Generation is a tricky domain. Academics as well as the industry still struggle for relevant metrics for evaluation of the generative models' qualities. Every generative task is different, having its own subtleties and peculiarities.These metrics can be applied to the numerous tasks such as:
+\begin{itemize}
+	\item short or long-form text generation
+	\item Machine Translation
+	\item Summarisation
+	\item Chatbots and dialogue systems
+	\item Multimedia systems like speech2text, image/video captioning
+\end{itemize}
+Following are certain metrics that are used to evaluate the above natural langauge generation tasks:
+
+\subsubsection{BLEU: Bilingual Evaluation Understudy)}
+
+\par BLEU \cite{bleu} is a precision focused metric that calculates n-gram overlap of the target and generated texts. This n-gram overlap means that this evaluation scheme is word-position independent apart from n-grams' term associations. BLEU also consists of a brevity penalty i.e. a penalty applied when the generated text is too small compared to the target text.
+
+
+\subsubsection{ROUGE: Recall Oriented Understudy for Gisting Evaluation}
+
+\par ROUGE \cite{rouge} is a set of metrics for evaluating automatic summarization of texts as well as machine translations. There are 3 types of ROUGE: ROUGE-N, the most common ROUGE type which means n-gram overlap. Second is ROUGE-L which checks for Longest Common Subsequence instead of n-gram overlap. The third is ROUGE-S which focuses on skip grams.
+
+
+\subsubsection{METEOR: Metric for Evaluation of Translation with Explicit Ordering}
+
+\par METEOR \cite{meteor} is an metric that works on word alignments. It computes one to one mapping of words in generated and reference texts. Traditionally, it uses WordNet or porter stemmer. Finally, it computes an F-score based on these mappings. The metric was designed to fix some of the problems found in the more popular BLEU metric, and also produce good correlation with human judgement at the sentence or segment level. This differs from the BLEU metric in that BLEU seeks correlation at the corpus level.
+
+
+\subsubsection{CIDEr: Consensus based Image Description Evaluation}
+
+\par CIDEr \cite{cider} is a metric used to evaluate image descriptions that uses human consensus. It uses a triplet-based method of collecting human annotations to measure consensus followed by stemming and grouping the words into n-grams. This metric is especially useful in image and video annoated tasks.
+
+\subsubsection{WMD: Word Mover's Distance}
+
+\par WMD \cite{wmd} is a fundamental technique for measuring the similarity of two documents. As the crux of WMD, it can take advantage of the underlying geometry of the word space by employing an optimal transport formulation. WMD leverages the results of advanced embedding techniques like word2vec and Glove. It suggests that distances between embedded word vectors are to some degree, semantically meaningful. It utilizes this property of word vector embeddings and treats text documents as a weighted point cloud of embedded words. 
+
+\subsubsection{SPICE: Semantic Propositional Image Captioning Evaluation}
+
+\par SPICE \cite{spice} is an automated caption evaluation metric defined over scene graphs. It first transforms  both generated and target captions into an intermediate representation that encodes semantic propositional content. It then creates a scene graph based on certain object classes, attribute types and relations which in turn is used to calculate the F-score b/w the generated and target captions. 
