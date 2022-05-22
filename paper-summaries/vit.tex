@@ -1,4 +1,4 @@
-\subsection{Vision Transformer (ViT) - An image is worth 16x16 words: Transformers for image recognition at scale}
+\subsection{Vision Transformer (ViT) - An image is worth 16x16 words: Transformers for image recognition at scale} \label{appendix:vit-paper}
 
 \subsubsection{Overview}
 
@@ -25,7 +25,7 @@
 
 
 \subsubsection{Performance}
-\par Dosovitskiy \textit{et al} report state-of-the-art-performance for various image recognition tasks (datasets mentioned above), when compared with current SOTA models such as Big Transfer (BiT) \cite{bit} and Noisy Student \cite{nos}.\par
+\par Dosovitskiy \textit{et al} report state-of-the-art-performance for various image recognition tasks (datasets mentioned above), when compared with current state-of-the-art models such as Big Transfer (BiT) \cite{bit} and Noisy Student \cite{nos}.\par
 
 
 \subsubsection{Methodology}
@@ -42,9 +42,9 @@
 
 \par The input consists of flattened $nxn$ patches of an image. These patches are non-overlapping and span the entire image. 
 \begin{itemize}
-	\item The original image $x = R^{HxWxC}$.
-	\item This is converted to a flattened 2D patch $x_p = R^{Nx(P^2.C)}$ where $HxW$ is the resolution of the image, $C$ is the number of channels, $PxP$ is the resolution of each patch.
-	\item $N=HW / P^2$ represents the number of patches extracted from the image and serve as the sequence length for the transformer. These are the patch embeddings.
+	\item The original image $x = R^{H \times W \times C}$.
+	\item This is converted to a flattened 2D patch $x_p = R^{N \times (P^2 \cdot C)}$ where $H \times W$ is the resolution of the image, $C$ is the number of channels, $P \times P$ is the resolution of each patch.
+	\item $N = HW / P^2$ represents the number of patches extracted from the image and serve as the sequence length for the transformer. These are the patch embeddings.
 	\item Position embeddings are added to the above patch embeddings. These can be:
 	\begin{itemize}
 		\item 1D, like in transformers.
@@ -70,10 +70,10 @@
 \paragraph{Training Procedure}
 \par Pretrained on datasets such as ImageNet, ImageNet-21k, JFT-300M for better performance.
 \begin{itemize}
-	\item Adam optimizer with $\beta1$ = 0.9, $\beta2$ = 0.999, batch size = 4096, weight decay = 0.1
+	\item Adam optimizer with $\beta_1$ = 0.9, $\beta_2$ = 0.999, batch size = 4096, weight decay = 0.1
 	\item Strong regularization is used throughout the encoder. Dropout, when used, is applied after every dense layer except for the the query-key-value projection layers and directly after the addition of positional embeddings
-	\item Training is done on a resolution of 224 (14x14)
+	\item Training is done on a resolution of $224 (14 \times 14)$
 \end{itemize}
 
 \subsubsection{Conclusion}
-\par The work by Dosovitskiy \textit{et al} provides a compelling case for using transformers instead of CNN-architectures in image recognition tasks. Even though it requires large amount of pre-training, it can be scaled much better than its CNN counterparts and can meet the performance (and even exceed it in certain cases) of current SOTA CNN-based models.
+\par The work by Dosovitskiy \textit{et al} provides a compelling case for using transformers instead of CNN-architectures in image recognition tasks. Even though it requires large amount of pre-training, it can be scaled much better than its CNN counterparts and can meet the performance (and even exceed it in certain cases) of current state-of-the-art CNN-based models.

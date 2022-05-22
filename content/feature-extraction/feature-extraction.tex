@@ -18,6 +18,25 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 
 % TODO: Working of VIVIT, video frames augmentation and preprocessing
 
+\par Arnab \textit{et al} propose two methods for mapping a video to its corresponding embeddings for input to ViViT, \textit{Uniform frame sampling} and \textit{Tubelet embedding} in \cite{vivit}. We use the uniform frame sampling method in our feature extraction framework. Arnab \textit{et al} also propose different attention mechanisms for the ViViT model; we use the \textit{spatio-temporal attention} mechanism. The flow of data is as follows:
+
+\begin{enumerate}
+	\item Consider the original video clip $X$ as consisting of $T$ frames, each of width $W$ and height $H$. The video has $C$ channels. Hence the shape of video frames of $X$ is $(T, H, W, C)$.
+	\item We perform certain preprocessing steps on the video frames:
+	\begin{enumerate}
+		\item We resize the spatial dimensions of the video frames. The shorter edge is resized to $256$, and the longer edge is resized maintaining the aspect ratio.
+		\item We normalize all channels of the video frames.
+		\item Generalizability and robustness of the features motivate data augmentation of the video frames. To this end, we randomly flip the video frames horizontally, and take random crops of spatial dimensions $224 \times 224 $ during training. Note that for validation and inference, we skip the random horizontal flip step and take a center crop of the same dimensions.
+	\end{enumerate}
+	\item Now, the uniform frame sampling method proposed by Arnab \textit{et al} in 
+\cite{vivit} is used to extract tokens mapped to a $768$-dimensional space. This involves using a three-dimensional convolutional layer to project the frames to patch embeddings, so that the shape of the embeddings are $(T, N, 768)$, where $N$ is the number of patches.
+	\item The patch embeddings are then flattened to $(T \times N, 768)$, and concatenated with a \textit{class token} for input to the encoder layers of ViViT.
+	\item For each encoder layer, the input is first subject to positional encoding, followed by layer normalization, followed by multi-head self-attention across all tokens.
+	\item Finally, the class token from the output of the last encoder layer is used as the feature representation of the clip $X$.
+\end{enumerate}
+
+\par More details about the different frame sampling methods, attention mechanisms and the ViViT model are given in \ref{appendix:vivit-paper}
+
 \subsubsection{Audio Features Extraction using AST} \label{audio-feats-extraction}
 \par Audio is an important aspect of any video. Not only does audio suggest the duration of an event, it can also signify the magnitude or significance of that event. Thus, audio becomes a powerful accessory to images when representing a video. We aim to use the recently proposed Audio Spectogram Transformer (AST) \cite{ast} which has outperformed current state-of-the-art models in audio classification.
 \begin{figure} [H]
