@@ -31,7 +31,7 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 	\item Now, the uniform frame sampling method proposed by Arnab \textit{et al} in 
 \cite{vivit} is used to extract tokens mapped to a $768$-dimensional space. This involves using a three-dimensional convolutional layer to project the frames to patch embeddings, so that the shape of the embeddings are $(T, N, 768)$, where $N$ is the number of patches.
 	\item The patch embeddings are then flattened to $(T \times N, 768)$, and concatenated with a \textit{class token} for input to the encoder layers of ViViT.
-	\item For each encoder layer, the input is first subject to positional encoding, followed by layer normalization, followed by multi-head self-attention across all tokens.
+	\item For each encoder layer, the input is subject to (1) positional encoding, (2) layer normalization, (3) multi-head self-attention across all tokens, (4) layer normalization and (5) two fully connected layers with GeLU activation and dropout.
 	\item Finally, the class token from the output of the last encoder layer is used as the feature representation of the clip $X$.
 \end{enumerate}
 
