@@ -35,7 +35,7 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 	\item The video encoders usually cannot be directly trained along with downstream tasks of TAL or DVC due to resource constraints; it is impractical to fit long untrimmed videos in commodity GPUs without drastically downsampling them in terms of space or time.
 \end{itemize}
 
-\par To solve this problem, Alwassel \textit{et al} introduced a supervised pre-training paradigm for TAL that aims to instill the ability to produce temporally sensitive features; video encoders are trained to explicitly discriminate between foreground and background clips in untrimmed videos. They show that TSP improves performance for TAL, action proposal and DVC tasks consistently on different datasets as well as with different downstream predictive models and architectures, clearly establishing that temporally sensitive features contribute positively to the task at hand. TSP involves training encoders with a downstream task involving two classification heads: (1) \textit{action classification} head and (2) \textit{temporal region classification} head. This architecture is applied to clips from untrimmed videos. Optionally, along with local features of every clip, a \textit{global video feature (GVF)} is also used for the temporal region classification to further improve temporal sensitivity \cite{alwassel2021tsp}.
+\par To solve this problem, Alwassel \textit{et al} introduced a supervised pre-training paradigm for TAL that aims to instill the ability to produce temporally sensitive features; video encoders are trained to explicitly discriminate between foreground and background clips in untrimmed videos. They show that TSP improves performance for TAL, action proposal and DVC tasks consistently on different datasets as well as with different downstream predictive models and architectures, clearly establishing that temporally sensitive features contribute positively to the task at hand. TSP involves training encoders with a downstream task involving two classification heads: (1) \textit{action classification} head and (2) \textit{temporal region classification} head. This architecture is applied to clips from untrimmed videos. Optionally, along with local features of every clip, a \textit{global video feature (GVF)} is also used for the temporal region classification to further improve temporal sensitivity \cite{alwassel2021tsp}. A summary of their work is given in \ref{appendix:tsp-paper}.
 
 
 \subsubsection{Temporally Sensitive Pretraining of Proposed Feature Extractors}
@@ -61,10 +61,9 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 	\item These two features, $f_a$ and $f_v$, are then combined using some function, for example addition or concatenation. In general, if there are $n$ backbones and we have features $f_1, f_2, f_3, ..., f_n$, this combiner function must combine all these and give a single-dimensional feature $f'$ of dimensions $(d', )$. 
 	\item The feature $f'$ is fed into a fully connected layer that converts it into a feature $f$ of shape $(d, )$. This feature $f$ is the final feature representation that is used for downstream tasks.
 	\item $f$ is fed to the action classification head, which consists of a simple fully connected layer followed by softmax activation layer, to give the action classification logits $y_c$ as output.
-	\item $f$ is also fed to the temporal region classification head, which consists of a fully connected layer followed by the sigmoid activation layer, to give the binary temporal region classification logit $y_r$ as output.
+	\item $f$ is also fed (optionally combined with the GVF, $f_g$, to improve the temporal sensitivity of the feature representation) to the temporal region classification head, which consists of a fully connected layer followed by the sigmoid activation layer, to give the binary temporal region classification logit $y_r$ as output.
 \end{enumerate}
-
-% TODO Add GVF extraction flow, arch (in diag too)
+\par The global video feature is extracted in the same manner as local features, with the additional step of \textit{pooling} across all local features ${f_1, f_2, ..., f_n}$ for a video. 
 
 \paragraph{Loss functions} As mentioned, there are two classification heads on the top of the TSP framework:
 \begin{itemize}
