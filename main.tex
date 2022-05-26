@@ -116,13 +116,22 @@
 	
 \end{titlepage}
 
+
+\chapter*{Abstract}
+The task of Dense Video Captioning (DVC), featured in the annual ActivityNet competition, aims to localize the different events in a given video and generate natural language descriptions for each of them. Most literature for this task involves utilizing CNN extracted video features and multiple stages of training. This project aims to utilize multiple modalities, namely audio and video, as opposed to previous single modality approaches, and we propose a model architecture that can be trained end-to-end. We utilize transformer architectures and efficient attention mechanisms for feature extraction, proposal generation as well as for captioning. We report xxxxx performance.
+
+% TODO Improve Abstract
+
+
 \tableofcontents
 
 
 \chapter{Introduction}
 \input{content/intro-basics.tex}
+\input{content/key-terms.tex}
 \input{content/problem-background.tex}
 \input{content/problem-formulation.tex}
+\input{content/objectives.tex}
 
 \section{Datasets}
 \input{content/dataset.tex}
@@ -135,7 +144,6 @@
 
 % section
 \input{content/feature-extraction/feature-extraction.tex}
-
 
 \appendix
 
