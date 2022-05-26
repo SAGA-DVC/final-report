@@ -1,6 +1,6 @@
 %!TEX program = pdflatex
 %!BIB program = bibtex
-\documentclass[]{article}
+\documentclass[]{book}
 \usepackage[totalwidth=480pt, totalheight=680pt]{geometry}
 \usepackage{float}
 \usepackage{hyperref}
@@ -115,38 +115,36 @@
 	\vfill % Push the date up 1/4 of the remaining page
 	
 \end{titlepage}
-\newpage
-\tableofcontents
-\newpage
 
-\section{Introduction}
+\tableofcontents
+
+
+\chapter{Introduction}
 \input{content/intro-basics.tex}
 \input{content/problem-background.tex}
 \input{content/problem-formulation.tex}
 
-\subsection{Datasets}
+\section{Datasets}
 \input{content/dataset.tex}
-\subsection{Evaluation Metrics}
+\section{Evaluation Metrics}
 \input{content/evaluation-metrics.tex}
-\section{Literature Review}
+\chapter{Literature Review}
 \input{content/literature-review.tex}
-\section{Methodology}
+\chapter{Methodology}
 \input{content/methodology.tex}
 
 % section
 \input{content/feature-extraction/feature-extraction.tex}
 
-\newpage
 
 \appendix
 
-\section{Supplementary Details}
-\newpage
+\chapter{Supplementary Details}
 % Include individual suppl-detail file here
 % Use subsection as the top level section in that .tex file
 
 
-\section{Paper Summaries}
+\chapter{Paper Summaries}
 % Include individual paper summaries here
 % Use subsection as the top level section in that .tex file
 \input{paper-summaries/krishna2017densecaptioning.tex}

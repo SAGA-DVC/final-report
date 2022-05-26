@@ -1,6 +1,6 @@
-\subsection{Temporally Sensitive Pretraining of Video Encoders for Localization Tasks} \label{appendix:tsp-paper}
+\section{Temporally Sensitive Pretraining of Video Encoders for Localization Tasks} \label{appendix:tsp-paper}
 
-\subsubsection{Overview}
+\subsection{Overview}
 Most localization methods use video features extracted by models that are trained for Trimmed 
 Action Classification (TAC). They're not necessarily suited for Temporal Action Localization 
 (TAL), since TAC-pretrained features tend to be temporally insensitive. For example, R(2+1)D, 
@@ -15,7 +15,7 @@ Pretraining of Video Encoders for Localization Tasks} introduce a supervised pre
 paradigm for TAL. This paradigm also considers background clips (which are not as important as 
 for TAC) and global video information, to improve temporal sensitivity.
 
-\subsubsection{Contributions and Findings}
+\subsection{Contributions and Findings}
 \begin{itemize}
 \item TSP trains an encoder to explicitly discriminate between foreground and background clips in untrimmed videos
 \item Temporally-sensitive features from TSP improves performance for TAL, action proposal and DVC Tasks
@@ -23,7 +23,7 @@ for TAC) and global video information, to improve temporal sensitivity.
 \item TAL performance is boosted on short action instances
 \end{itemize}
 
-\subsubsection{Pre-training Methodology}
+\subsection{Pre-training Methodology}
 The major goal of TSP is to incorporate temporal sensitivity in video encoders. Hence, this 
 pre-training involves training encoders on the task of classifying foreground clips, and 
 classifying whether a clip is inside or outside the action. The data used for TSP consists 
@@ -39,7 +39,7 @@ number of clips from each class is chosen. Each $X$ is annotated with two labels
 foreground/action region ($y^r$ = 1) or background/no-action region ($y^r$ = 0) of the video
 \end{itemize}
 
-\paragraph{Local and Global Feature Encoding}
+\subsection{Local and Global Feature Encoding}
 The encoder $E$ transforms a clip $X$ to a local $F$-dimensional feature $f$. Global Video 
 Feature (GVF) is the max-pooled feature from all local features. For classifying the 
 temporal region (foreground or background), combine each local feature f is combined with 
@@ -65,7 +65,7 @@ clip, then loss from both heads are taken into account, relatively weighted by $
 and $\alpha^c$. If the clip is a background clip, only the temporal region classification 
 loss is taken, weighted by $\alpha^r$.
 
-\subsubsection{Performance}
+\subsection{Performance}
 Using the pre-trained video encoder, Alwassel \textit{et al} take some implementations of event localisation methods and feed temporally sensitive features to them. The algorithms used are:
 \begin{itemize}
 \item GTAD: sub-graph localization for Temporal Action Detection
@@ -82,5 +82,5 @@ Their observations are as follows \cite{alwassel2021tsp}:
 \item Indications of applicability of TSP on other datasets as well as its transferability
 \end{itemize}
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 Alwassel \textit{et al} present Temporally Sensitive Pretraining, a novel supervised pretraining approach for video encoders. This approach considers background clips along with foreground clips, and uses global information to gain temporal sensitivity. Their results indicate it is advantageous to use TSP features over other popular features to build accurate models \cite{alwassel2021tsp}, especially for DVC.

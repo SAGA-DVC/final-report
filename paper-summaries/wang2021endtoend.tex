@@ -1,11 +1,11 @@
-\subsection{End-to-end Dense Video Captioning with Parallel Decoding}
+\section{End-to-end Dense Video Captioning with Parallel Decoding}
 
-\subsubsection{Overview}
+\subsection{Overview}
 \par Wang \textit{et al} in their paper, titled \textit{End-to-end Dense Video Captioning with Parallel Decoding} \cite{wang2021endtoend} aim to address certain issues that they identify in existing DVC work, namely, the two-stage design and handcrafted and heuristic components for event proposals generation. They model DVC as a set prediction task, and propose a model which, using a transformer architecture based on the deformable DeTR \cite{}, performs event localization and event captioning in parallel. They utilize an event counter head to predict number of events based on video understanding.
 
-\subsubsection{Limitations Identified}
+\subsection{Limitations Identified}
 \par Wang \textit{et al} identify the following limitations of previous DVC work:
-\paragraph{Two-stage design} Most models use a localize-then-describe strategy for DVC tasks, i.e. they first localize the events, and then feed these events to a captioning module for generating captions. These methods usually are not trained end-to-end; rather the two stages are trained separately. Consequently, the mutual promotion of the two subtasks is limited; captioning is considered a downstream task and hence inter-task associations are not learned.
+\subsubsection{Two-stage design} Most models use a localize-then-describe strategy for DVC tasks, i.e. they first localize the events, and then feed these events to a captioning module for generating captions. These methods usually are not trained end-to-end; rather the two stages are trained separately. Consequently, the mutual promotion of the two subtasks is limited; captioning is considered a downstream task and hence inter-task associations are not learned.
 
 \begin{figure}[h]
 \centering
@@ -13,11 +13,11 @@
 \caption{Two-stage architecture versus proposed single-stage PDVC architecture. Image courtesy \cite{wang2021endtoend}}
 \end{figure}
 
-\paragraph{Unreliable Event Count Estimation} The number of event proposals is often heuristically determined, for example by applying manual thresholds on confidence scores, choosing the top $k$ events, non-maximum suppression (NMS), et cetera. These methods introduce a lot of design issues, assumptions and hyperparameters, and the authors label these as \textit{hand-crafted components} \cite{wang2021endtoend}. An unreliable event count estimation can cause either missing information in captions due to under-estimation, or redundancy in captions due to over-estimation.
+\subsubsection{Unreliable Event Count Estimation} The number of event proposals is often heuristically determined, for example by applying manual thresholds on confidence scores, choosing the top $k$ events, non-maximum suppression (NMS), et cetera. These methods introduce a lot of design issues, assumptions and hyperparameters, and the authors label these as \textit{hand-crafted components} \cite{wang2021endtoend}. An unreliable event count estimation can cause either missing information in captions due to under-estimation, or redundancy in captions due to over-estimation.
 
-\paragraph{Design of Proposal Generators} Most proposal generators use anchors and/or post-processing of events. Again, this brings in more hyperparameters and assumptions.
+\subsubsection{Design of Proposal Generators} Most proposal generators use anchors and/or post-processing of events. Again, this brings in more hyperparameters and assumptions.
 
-\subsubsection{Proposed Solution}
+\subsection{Proposed Solution}
 
 \begin{figure}
 \centering
@@ -40,11 +40,11 @@ The features are extracted from videos using pretrained video encoders C3D and T
 \subsubsection{Parallel Decoding}
 \par The decoder layers of the deformable transformer, which use multi-scale deformable attention in place of cross-attention (self-attention remaining unchanged as in \cite{tfm}). The decoder layers query event-level features from the context vector conditioned on $N$ learnable embeddings (termed \textit{event queries}, $q_j$) and corresponding scalar reference point $p_j$. An event query $q_j$ serves as an initial guess of event features and $p_j$ serves as that of the center point of the event, and these are refined at each decoder layer. The output representation from decoder layers is given to the following three heads directly and in parallel.
 
-\paragraph{Localization Head} This head performs box prediction with a center and length offset with respect to the reference point, and performs binary classification to output the foreground confidence for each event query. Both these predictions are performed using fully connected layers. The output of this head is $\{ t_j^s, t_j^e, c_j^{loc} \}$, where $c_j^{loc}$ is the localization (foreground) confidence.
+\subsubsection{Localization Head} This head performs box prediction with a center and length offset with respect to the reference point, and performs binary classification to output the foreground confidence for each event query. Both these predictions are performed using fully connected layers. The output of this head is $\{ t_j^s, t_j^e, c_j^{loc} \}$, where $c_j^{loc}$ is the localization (foreground) confidence.
 
-\paragraph{Captioning Head} The authors propose two variants for the captioning head: (1) a vanilla LSTM and (2) an LSTM using deformable soft attention. The latter uses cues from the combination of caption words and the event features, while the former uses only event features.
+\subsubsection{Captioning Head} The authors propose two variants for the captioning head: (1) a vanilla LSTM and (2) an LSTM using deformable soft attention. The latter uses cues from the combination of caption words and the event features, while the former uses only event features.
 
-\paragraph{Event Counter} This head consists of a max-pooling layer to compress event queries into a global feature vector, which is fed to a fully connected layer to predict vector $r_len$, from which $N_{set}$ is found by the $argmax$ function. 
+\subsubsection{Event Counter} This head consists of a max-pooling layer to compress event queries into a global feature vector, which is fed to a fully connected layer to predict vector $r_len$, from which $N_{set}$ is found by the $argmax$ function. 
 
 Finally, the top $N_{set}$ events from N event queries in terms of their overall confidence scores $c_j$ are selected.
 $$ c_j = c_j^{loc} + \mu \frac{1}{M_j^{\gamma}} \sum_{t=1}^{M_j}{log( c^{cap}_{jt} )} $$

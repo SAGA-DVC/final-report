@@ -1,11 +1,11 @@
-\subsection{Vision Transformer (ViT) - An image is worth 16x16 words: Transformers for image recognition at scale} \label{appendix:vit-paper}
+\section{Vision Transformer (ViT) - An image is worth 16x16 words: Transformers for image recognition at scale} \label{appendix:vit-paper}
 
-\subsubsection{Overview}
+\subsection{Overview}
 
 \par Dosovitskiy \textit{et al}, in their 2020 paper titled \textit{An image is worth 16x16 words: Transformers for image recognition at scale} \cite{vit}, aim to replace CNN based architectures with transformers for a multitude of computer vision tasks. They propose a transformer-based architecture inspired by Vaswani \textit{et al} \cite{tfm}, replacing the work embeddings with non-overlapping 'patch embeddings', extracted from images. The authors show that if ViT is pre-trained on large amounts of data, it can produce better results as compared to its CNN counterparts in various image recognition benchmarks.\par
 
 
-\subsubsection{Datasets}
+\subsection{Datasets}
 \begin{itemize}
 \item Pre-trained on:
 	\begin{itemize}
@@ -24,11 +24,11 @@
 \end{itemize}
 
 
-\subsubsection{Performance}
+\subsection{Performance}
 \par Dosovitskiy \textit{et al} report state-of-the-art-performance for various image recognition tasks (datasets mentioned above), when compared with current state-of-the-art models such as Big Transfer (BiT) \cite{bit} and Noisy Student \cite{nos}.\par
 
 
-\subsubsection{Methodology}
+\subsection{Methodology}
 
 \par Dosovitskiy \textit{et al} use the original transformer model \cite{tfm}, but with different input embeddings that are extracted from images. The transformer model then outputs a classification ([class]) token which represents the entire image. This [class] token is then used for downstream tasks (mentioned above).\par
 
@@ -38,7 +38,7 @@
 \end{figure}
 
 
-\paragraph{Input: Patch embeddings}
+\subsubsectionh{Input: Patch embeddings}
 
 \par The input consists of flattened $nxn$ patches of an image. These patches are non-overlapping and span the entire image. 
 \begin{itemize}
@@ -56,7 +56,7 @@
 \end{itemize}
 \par
 
-\paragraph{Transformer Encoder}
+\subsubsection{Transformer Encoder}
 
 \par The transformer model proposed in \cite{tfm} is inherently the same one used by ViT. The only difference is that a normalisation layer is added before the multi-headed self attention block. Additionally, ViT used the GELU non-linearity as part of the multi-layer perceptron block. \par
 
@@ -67,7 +67,7 @@
 \end{figure}
 
 
-\paragraph{Training Procedure}
+\subsubsection{Training Procedure}
 \par Pretrained on datasets such as ImageNet, ImageNet-21k, JFT-300M for better performance.
 \begin{itemize}
 	\item Adam optimizer with $\beta_1$ = 0.9, $\beta_2$ = 0.999, batch size = 4096, weight decay = 0.1
@@ -75,5 +75,5 @@
 	\item Training is done on a resolution of $224 (14 \times 14)$
 \end{itemize}
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 \par The work by Dosovitskiy \textit{et al} provides a compelling case for using transformers instead of CNN-architectures in image recognition tasks. Even though it requires large amount of pre-training, it can be scaled much better than its CNN counterparts and can meet the performance (and even exceed it in certain cases) of current state-of-the-art CNN-based models.

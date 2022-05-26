@@ -1,6 +1,6 @@
-\subsection{A Better Use of Audio-Visual Cues: Dense Video Captioning with Bi-modal Transformer}
+\section{A Better Use of Audio-Visual Cues: Dense Video Captioning with Bi-modal Transformer}
 
-\subsubsection{Overview}
+\subsection{Overview}
 
 \par Iashin and Rahtu, in their 2020 paper titled \textit{A Better Use of Audio-Visual Cues} \cite{iashin2020better},
 approached the task of Dense Video captioning by using two types of input features: video as well as
@@ -13,12 +13,12 @@ proposal generator}, inspired by the \textit{YOLO} object detector \cite{yolo} w
 proposals for caption generation.
 
 
-\subsubsection{Datasets}
+\subsection{Datasets}
 \begin{itemize}
 \item ActivityNet Captions \cite{krishna2017densecaptioning}
 \end{itemize}
 
-\subsubsection{Performance}
+\subsection{Performance}
 \par Iashin \textit{et al} report state-of-the-art-performance for the dense video captioning 
 task on the published validation subset of the ActivityNet Captions dataset in terms of BLEU@3-4 
 metrics and near state-of-the-art performance in terms of the METEOR metric. Considering the 
@@ -26,7 +26,7 @@ task of proposal generation in isolation, they report state-of-the-art performan
 score of 60.27\%, on the same dataset.
 
 
-\subsubsection{Methodology}
+\subsection{Methodology}
 
 \par Iashin \textit{et al} use a Inflated 3D Network pre-trained on the \textit{Kinetics} dataset
 \cite{kay2017kinetics} for extracting visual features from video
@@ -75,7 +75,7 @@ over the vocabulary.
 
 \end{enumerate}
 
-\paragraph{Proposal Generation Module}
+\subsubsection{Proposal Generation Module}
 
 
 \par The design of individual proposal generator heads in the Proposal Generator is inspired by 
@@ -109,7 +109,7 @@ error} is the Mean Squared Error (MSE), while the confidence loss is a weighted 
 Binary Cross Entropy (BCE) of objectness and no-objectness loss. \par
 
 
-\paragraph{Captioning Module}
+\subsubsection{Captioning Module}
 \par
 The captioning module is essentially the Bimodal Transformer, consisting of a bimodal 
 encoder and a bimodal decoder. The input to the bimodal encoder during captioning is feature 
@@ -128,7 +128,7 @@ captions) and (4) two position-wise fully connected layers which act as the clas
 layers for the next caption token.\par
 
 
-\paragraph{Training Procedure}
+\subsubsection{Training Procedure}
 \par
 First, the captioning module is trained using ground truth proposals and their given 
 captions using KL-divergence loss and label smoothing. The bimodal encoder weights are then 
@@ -137,7 +137,7 @@ proposal head uses Mean Squared Error for localization and binary cross-entropy 
 loss.\par
 
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 \par The work by Iashin \textit{et al} provides a compelling case for exploring the use of 
 multiple modalities for the task of Dense Video Captioning. Their ablation study shows that 
 performance with using only visual features is more than using only audio features, 

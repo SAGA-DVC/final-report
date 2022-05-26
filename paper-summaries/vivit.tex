@@ -1,12 +1,12 @@
-\subsection{ViViT: A Video Vision Transformer} \label{appendix:vivit-paper}
+\section{ViViT: A Video Vision Transformer} \label{appendix:vivit-paper}
 
-\subsubsection{Overview}
+\subsection{Overview}
 
 \par Arnab \textit{et al}, in their 2021 paper titled \textit{ViViT: A Video Vision Transformer} \cite{vivit}, extend the Vision Transformer (ViT) \cite{vit} to tackle video recognition tasks. 
 They propose various attention architectures to model the spatial and temporal interaction within video frames. 
 The also propose embedding extraction methods for videos which are on similar lines to those done for images. \par
 
-\subsubsection{Datasets}
+\subsection{Datasets}
 \begin{itemize}
 \item Pre-trained on:
 	\begin{itemize}
@@ -24,17 +24,17 @@ The also propose embedding extraction methods for videos which are on similar li
 \end{itemize}
 
 
-\subsubsection{Performance}
+\subsection{Performance}
 \par Arnab \textit{et al} report state-of-the-art performance for various video recognition tasks (datasets mentioned above), when compared with current state-of-the-art models.\par
 
 
-\subsubsection{Methodology}
+\subsection{Methodology}
 
 \par Arnab \textit{et al} use the ViT model \cite{vit} as its foundation, but with different input embeddings that are extracted from video and different attention blocks. 
 The transformer model then outputs a classification ([class]) token which represents the entire video. 
 This [class] token is then used for downstream tasks (mentioned above).\par
 
-\paragraph{Input: Token embeddings}
+\subsubsection{Input: Token embeddings}
 
 \par Two methods for mapping a video to its corresponding embeddings are proposed, namely:
 \begin{itemize}
@@ -61,7 +61,7 @@ This [class] token is then used for downstream tasks (mentioned above).\par
 \end{itemize}
 \par
 
-\paragraph{Transformer Encoder}
+\subsubsection{Transformer Encoder}
 
 \par ViViT extends the transformer model proposed in \cite{vit} by making use of different attention architectures to model the spatio-temporal interaction between the token embeddings. \par
 
@@ -104,7 +104,7 @@ This [class] token is then used for downstream tasks (mentioned above).\par
 
 
 
-\paragraph{Training Procedure}
+\subsubsection{Training Procedure}
 \par Pre-trained weights of the ViT model are leveraged due to the size of various video recognition tasks (many orders of magnitude smaller than image recognition datasets).
 The model can then be trained on various video recognition datasets such as Kinetics and Epic Kitchens.
 \begin{itemize}
@@ -113,6 +113,6 @@ The model can then be trained on various video recognition datasets such as Kine
 	\item Training is done on a resolution of $224 (14 \times 14)$
 \end{itemize}
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 \par The work by Arnab \textit{et al} provides a compelling case for using transformers instead of CNN-architectures in video recognition tasks. 
 Even though it requires large amount of pre-training, it can be scaled much better than its CNN counterparts and can meet the performance (and even exceed it in certain cases) of current state-of-the-art CNN-based models.
