@@ -52,7 +52,7 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 	\item The spectrogram is then split into a sequence of N 16x16 patches with a time and frequency overlap of 6, where N is the number of patches and the Transformer's effective input sequence length.
 	\item Each 16×16 patch is then flattened into a 1D patch embedding of size 768 using a linear projection layer. 
 	\item Trainable positional embedding is added to each patch embedding which allows the model to capture the spatial structure of the 2D audio spectrogram.
-	\item The CLS token is then appended to the beginning of the sequence, which is subsequently fed into the encoder layer of AST.
+	\item The class token is then concatenated at the beginning of the sequence, which is subsequently fed into the encoder layer of AST.
 	\item Finally, the class token from the output of the last encoder layer is used as the feature representation of the clip.
 	
 \end{enumerate}
