@@ -54,7 +54,7 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 	\item The video encoders usually cannot be directly trained along with downstream tasks of TAL or DVC due to resource constraints; it is impractical to fit long untrimmed videos in commodity GPUs without drastically downsampling them in terms of space or time.
 \end{itemize}
 
-\par To solve this problem, Alwassel \textit{et al} introduced a supervised pre-training paradigm for TAL that aims to instill the ability to produce temporally sensitive features; video encoders are trained to explicitly discriminate between foreground and background clips in untrimmed videos. They show that TSP improves performance for TAL, action proposal and DVC tasks consistently on different datasets as well as with different downstream predictive models and architectures, clearly establishing that temporally sensitive features contribute positively to the task at hand. TSP involves training encoders with a downstream task involving two classification heads: (1) \textit{action classification} head and (2) \textit{temporal region classification} head. This architecture is applied to clips from untrimmed videos. Optionally, along with local features of every clip, a \textit{global video feature (GVF)} is also used for the temporal region classification to further improve temporal sensitivity \cite{alwassel2021tsp}. A summary of their work is given in \ref{appendix:tsp-paper}.
+\par To solve this problem, Alwassel \textit{et al} introduced a supervised pre-training paradigm for TAL that aims to instill the ability to produce temporally sensitive features; video encoders are trained to explicitly discriminate between foreground and background clips in untrimmed videos from the ActivityNet dataset. They show that TSP improves performance for TAL, action proposal and DVC tasks consistently on different datasets as well as with different downstream predictive models and architectures, clearly establishing that temporally sensitive features contribute positively to the task at hand. TSP involves training encoders with a downstream task involving two classification heads: (1) \textit{action classification} head and (2) \textit{temporal region classification} head. The ActivityNet dataset has action class annotations, and for temporal region annotations we use the same sampling as in \cite{alwassel2021tsp}, which results in a balanced number of action and non-action clips. Optionally, along with local features of every clip, a \textit{global video feature (GVF)} is also used for the temporal region classification to further improve temporal sensitivity \cite{alwassel2021tsp}. A summary of their work is given in \ref{appendix:tsp-paper}.
 
 
 \subsection{Temporally Sensitive Pretraining of Proposed Feature Extractors}
@@ -93,6 +93,5 @@ $$ L_{CE} = -\frac{1}{n} \sum_{i=1}^{n}{\textbf{y}log(\hat{\textbf{y}})} $$
 \par The two losses, $L_c$ and $L_r$ are given loss coefficients $\alpha_c$ and $\alpha_r$ for relative importance for contributing towards the total loss:
 $$ L = \alpha_c L_c + \alpha_r L_r $$
 
-\par We evaluate the effectiveness of this temporally sensitive pretraining in the Results section.
-%TODO Make results a ref, and add TSP eval
+\include{content/feature-extraction/tsp-eval.tex}
 
