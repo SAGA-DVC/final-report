@@ -20,8 +20,9 @@
 \else
    	\usepackage{fontspec}
 \fi
-
-
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[english]{babel}
 
 \setcounter{tocdepth}{4}  % Show headings upto level 4 (1.1.1.1)
 % \setcounter{secnumdepth}{4}  % Show 1.1.1.1
@@ -133,12 +134,16 @@ The task of Dense Video Captioning (DVC), featured in the annual ActivityNet com
 \input{content/problem-formulation.tex}
 \input{content/objectives.tex}
 
+\chapter{Literature Review}
+\input{content/literature-review.tex}
 \section{Datasets}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \input{content/dataset.tex}
 \section{Evaluation Metrics}
 \input{content/evaluation-metrics.tex}
-\chapter{Literature Review}
-\input{content/literature-review.tex}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+
 \chapter{Methodology}
 \input{content/methodology.tex}
 
@@ -146,6 +151,8 @@ The task of Dense Video Captioning (DVC), featured in the annual ActivityNet com
 \input{content/feature-extraction/feature-extraction.tex}
 
 \appendix
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+
 
 \chapter{Supplementary Details}
 % Include individual suppl-detail file here
@@ -171,7 +178,6 @@ The task of Dense Video Captioning (DVC), featured in the annual ActivityNet com
 \newpage
 \thispagestyle{empty}
 \listoffigures
-\newpage
 \listoftables
 
 

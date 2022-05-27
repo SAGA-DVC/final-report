@@ -54,7 +54,7 @@
 \section{Identified Themes}
 \par Dense video captioning can be decomposed into two parts: event localization and event description. Existing research methodologies can be grouped into different categories based on training methods, modalities used and ordering of tasks.
 
-\subsection{Based on Training schemes}:
+\subsection{Based on Training schemes}
 \begin{enumerate}
 	\item \textbf{Independent training}
 	\item \textbf{Alternate training}: alternate between i) training the proposal module only and ii) training the captioning module on the positive event proposals while fine-tuning the proposal module.
@@ -62,17 +62,26 @@
 	\item \textbf{Weakly Supervised}
 \end{enumerate}
 
-\subsection{Based on Modalities}:
+\subsection{Based on Modalities}
 \begin{enumerate}
 	\item \textbf{Uni-modal}: Only visual features
 	\item \textbf{Multi-modal}: Combinations of visual, audio and speech features.
 \end{enumerate}
 
-\subsection{Based on Task ordering}:
+\subsection{Based on Task ordering}
 \begin{enumerate}
 	\item \textbf{Top-Down}: localize-then-describe
 	\item \textbf{Bottom-Up}: describe-localize-refine
 \end{enumerate}
+
+\section{Datasets}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+\input{content/dataset.tex}
+\section{Evaluation Metrics}
+\input{content/evaluation-metrics.tex}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+
 
 \section{Research Literature Gaps}
 % TODO
