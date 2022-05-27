@@ -23,15 +23,15 @@
 
 \usepackage{amsfonts}
 
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[english]{babel}
+\usepackage{tocvsec2}
 \setcounter{tocdepth}{4}  % Show headings upto level 4 (1.1.1.1)
 % \setcounter{secnumdepth}{4}  % Show 1.1.1.1
 
 %opening
-\title{
-	\incl
-
-	Dense Video Captioning
-}
+\title{Dense Video Captioning}
 
 \author{Ganadhish Acharekar, Akshat Shah, Arnav Shah, Saharsh Jain}
 
@@ -133,12 +133,10 @@ The task of Dense Video Captioning (DVC), featured in the annual ActivityNet com
 \input{content/problem-formulation.tex}
 \input{content/objectives.tex}
 
-\section{Datasets}
-\input{content/dataset.tex}
-\section{Evaluation Metrics}
-\input{content/evaluation-metrics.tex}
 \chapter{Literature Review}
 \input{content/literature-review.tex}
+
+
 \chapter{Methodology}
 \input{content/methodology.tex}
 
@@ -146,24 +144,26 @@ The task of Dense Video Captioning (DVC), featured in the annual ActivityNet com
 \input{content/feature-extraction/feature-extraction.tex}
 
 \appendix
+\settocdepth{section}
+
 
 \chapter{Supplementary Details}
 % Include individual suppl-detail file here
-% Use subsection as the top level section in that .tex file
+% Use section as the top level section in that .tex file
 
 
 \chapter{Paper Summaries}
 % Include individual paper summaries here
-% Use subsection as the top level section in that .tex file
+% Use section as the top level section in that .tex file
 \input{paper-summaries/krishna2017densecaptioning.tex}
 \newpage
 \input{paper-summaries/bmt.tex}
 \newpage
 \input{paper-summaries/vit.tex}
 \newpage
-\input{paper-summaries/ast.tex}
-\newpage
 \input{paper-summaries/vivit.tex}
+\newpage
+\input{paper-summaries/ast.tex}
 \newpage
 \input{paper-summaries/alwassel2021tsp.tex}
 \newpage
@@ -178,7 +178,6 @@ The task of Dense Video Captioning (DVC), featured in the annual ActivityNet com
 \newpage
 \thispagestyle{empty}
 \listoffigures
-\newpage
 \listoftables
 
 
