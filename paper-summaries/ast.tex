@@ -1,0 +1,42 @@
+\section{AST: Audio Spectrogram Transformer} \label{appendix:ast-paper}
+
+\subsection{Overview}
+
+\par Gong \textit{et al} in their 2021 paper titled \textit{AST: Audio Spectrogram Transformer} \cite{ast} proposed a convolution-free, solely attention-based model that can capture long-range global context even in the lowest layers and is directly applied to an audio spectrogram. They also suggest a method for transferring knowledge from the ImageNet-pretrained Vision Transformer (ViT) to AST, which can greatly enhance performance.\par
+
+\subsection{Datasets}
+\begin{itemize}
+\item AudioSet
+\item ESC-50 
+\item Speech Commands
+\end{itemize}
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{assets/img/ast_methodology.png}
+	\caption{Audio Spectrogram Transformer by Gong
+	\textit{et al} (Courtesy \cite{ast})}
+\end{figure}
+
+\subsection{Methodology}
+\begin{itemize}
+\item A sequence of 128-dimensional log Mel filterbank (fbank) features is computed with a 25ms Hamming window every 10ms from the input audio waveform of t seconds. As a result, the AST receives a 128x100t spectrogram as input.
+\item The spectrogram is then split into a sequence of N 16x16 patches with a time and frequency overlap of 6, where N is the number of patches and the Transformer's effective input sequence length.
+\item Each 16×16 patch is then flattened into a 1D patch embedding of size 768 using a linear projection layer. This linear projection layer is called patch embedding layer.
+\item Since the Transformer architecture does not capture the input order information and the patch sequence is also not in temporal order, trainable positional embedding (also of size 768) is added to each patch embedding which allows the model to capture the spatial structure of the 2D audio spectrogram.
+\item The CLS token is then appended to the beginning of the sequence, which is subsequently fed into the Transformer.
+\item A Transformer consists of several encoder and decoder layers. For classification tasks, AST only uses the encoder of the Transformer.
+\item The [CLS] token output from the Transformer encoder serves as the audio spectrogram representation. The audio spectrogram representation is mapped to labels for classification using a linear layer with sigmoid activation.
+\item AST model also allows cross-modality transfer learning since images and audio spectrograms have similar formats. So ImageNet-pretrained CNN weights are used as initial CNN weights for audio classification training.
+\end{itemize}
+
+\subsection{Training procedure}
+\begin{itemize}
+\item Model is pre-trained with the ImageNet dataset. 
+\item Model is trained  with a batch size of 12, the Adam optimizer, and uses binary cross-entropy loss.
+\item For balanced set experiments, the initial learning rate of 5e-5  is used and the model is trained for  25 epochs, the learning rate is cut into half every 5 epochs after the 10th epoch. 
+\item For full set experiments, the  initial learning rate of 1e-5 is used and the model is trained for 5 epochs, the learning rate is cut into half every epoch after the 2nd epoch.
+\item Mean Average Precision (mAP) is used as the main evaluation metric.
+\end{itemize}
+
+\subsection{Conclusion}
+\par Gong et al present Audio Spectrogram Transformer which is a convolution-free, purely attention-based model for audio classification which features a simple architecture and superior performance.
