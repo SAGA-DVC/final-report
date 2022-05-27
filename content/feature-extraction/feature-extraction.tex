@@ -1,7 +1,7 @@
 \chapter{Feature Extraction}
 \par For the task of Dense Video Captioning, a rich feature space would enhance the representational power of the model, thereby leading to more meaningful and accurate event proposals and captions. In most previous works, convolutional neural networks are commonly used to extract features  from videos for any downstream tasks. Moreover, most localization methods use video features extracted by models that are trained for the task of Trimmed Action Classification (TAC), on datasets such as Kinetics\cite{kay2017kinetics} and Sports-1M, such as R(2+1)D\cite{r(2+1)d}, I3D\cite{carreira2018quo}, C3D and others. Additionally, most previous works focus on using a single modality (i.e. video) or multiple modalities based only on video, like RGB and optical flow features, for example from I3D\cite{carreira2018quo}, to generate feature vectors as input to the downstream model. Some works have used multiple modalities including video (RGB, optical flow) and audio, like \cite{iashin2020better}. The motivation for using multiple modalities is so that the feature space can grow richer, and that multiple modalities can complement each other to give strong event indicators. 
 
-\par In this section, we explain how features are extracted from videos in the form of two modalities: video and audio. We use the \textit{Video Vision Transformer (ViViT)} \cite{vivit} for video feature extraction and the \textit{Audio Spectogram Transformer (AST)} \cite{ast} for audio feature extraction. We also consider the temporal sensitivity of features as a characteristic that can benefit DVC.
+\par In this section, we explain how features are extracted from videos in the form of two modalities: video and audio. We use the \textit{Video Vision Transformer (ViViT)} \cite{vivit} for video feature extraction and the \textit{Audio Spectrogram Transformer (AST)} \cite{ast} for audio feature extraction. We also consider the temporal sensitivity of features as a characteristic that can benefit DVC.
 
 \section{Feature Extraction Methodology}
 
@@ -38,14 +38,25 @@ Kitchens 100, Something-Something v2 and Moments in Time. Even though ViViT requ
 \par More details about the different frame sampling methods, attention mechanisms and the ViViT model are given in \ref{appendix:vivit-paper}
 
 \subsection{Audio Features Extraction using AST} \label{audio-feats-extraction}
-\par Audio is an important aspect of any video. Not only does audio suggest the duration of an event, it can also signify the magnitude or significance of that event. Thus, audio becomes a powerful accessory to images when representing a video. We aim to use the recently proposed Audio Spectogram Transformer (AST) \cite{ast} which has outperformed current state-of-the-art models in audio classification.
+\par Audio is an important aspect of any video. Not only does audio suggest the duration of an event, it can also signify the magnitude or significance of that event. Thus, audio becomes a powerful accessory to images when representing a video. Convolutional neural networks (CNNs)  have been widely used to learn representations from raw spectrograms for end-to-end modelling, as the inductive biases inherent to CNNs such as spatial locality and translation equivariance are believed to be helpful. In order to better capture long-range global context, a trend is to add a self-attention mechanism on top of the CNN. Such CNN-attention hybrid models have achieved state-of-the-art (SOTA) results. We aim to use the recently proposed Audio Spectrogram Transformer (AST) \cite{ast} which has outperformed current state-of-the-art models in audio classification. Audio Spectrogram Transformer is a convolution-free, purely attention based model that is directly applied to an audio spectrogram and can capture long-range global context even in the lowest layers.
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=7cm, height=6cm] {assets/img/ast_methodology.png}
 	\caption{AST encoder by Gong \textit{et al}. (Image courtesy \cite{ast})}
 \end{figure}
 
-% TODO: Working of AST, Mel Spectograms and audio preprocessing
+\par The flow of data is as follows:
+\begin{enumerate}
+	\item The audio signal is first pre-emphasised, then sliced into (overlapping) frames and a window function is applied to each frame. Following that, we perform a Short-Time Fourier Transform on each frame, calculate the power spectrum, and then compute the filter banks.
+	\item Thus a sequence of 128-dimensional log Mel filterbank (fbank) features is computed with a 25ms Hamming window every 10ms from the input audio waveform of t seconds. 
+	\item The spectrogram is then split into a sequence of N 16x16 patches with a time and frequency overlap of 6, where N is the number of patches and the Transformer's effective input sequence length.
+	\item Each 16×16 patch is then flattened into a 1D patch embedding of size 768 using a linear projection layer. 
+	\item Trainable positional embedding is added to each patch embedding which allows the model to capture the spatial structure of the 2D audio spectrogram.
+	\item The CLS token is then appended to the beginning of the sequence, which is subsequently fed into the encoder layer of AST.
+	\item Finally, the class token from the output of the last encoder layer is used as the feature representation of the clip.
+	
+\end{enumerate}
+  
 
 \section{Temporal Sensitivity of Features}
 \par As mentioned previously, most localization methods use video features extracted by models that are trained for Trimmed Action Classification (TAC) tasks. These features are not necessarily optimal for Temporal Action Localization (TAL) and other dependent tasks such as Action Proposal Generation and Dense Video Captioning. Alwassel \textit{et al}, in their paper titled \textit{TSP: Temporally Sensitive Pretraining of Video Encoders for Localization Tasks}, claim that this is due to the inherent lack of temporal sensitivity in features from TAC trained video encoders \cite{alwassel2021tsp}. Yet, these features are prominently used for TAL and DVC tasks. This discrepancy is explained by the following reasons:
