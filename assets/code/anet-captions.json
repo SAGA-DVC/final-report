@@ -1,0 +1,18 @@
+{
+   5n7NCViB5TU: {
+      annotations: [
+         {
+            label: "Discus throw",
+            segment: [24.25018, 38.08036]
+         },
+         {
+            label: "Discus throw",
+            segment: [97.00073, 106.284]
+         }
+      ],
+      duration: 121.44,
+      resolution: "320x240",
+      subset: "training",
+      url: "https://www.youtube.com/watch?v=5n7NCViB5TU"
+   }
+}
