@@ -1,0 +1,11 @@
+\section{Future Work}
+\par Dense Video Captioning is a complex task which requires hours of training and hyper-parameter tuning to get optimized results for both, the event localization and caption generation. In the future, we would build on top of our current results by: 
+\begin{itemize}
+	\item Using 768-dimensional feature vectors throughout our model. This would double the parameters in our model from 75M to 150M and thereby, would require longer training schedules on multiple GPUs.
+	\item Training the model on other datasets such as YouCook, YouCook2, TACoS, Kinetics, etc. for tasks, dense video captioning, classification and localization.
+	\item Separating the input modalities throughout the model with cross attention between the two. This however, would significantly increase the model size and we would then be able to run it on high compute GPUs only. 
+	\item Thus, we would also try further optimizations such as to make the model suitable to run on low compute platforms.
+	\item We would also work on adapting the model to various other tasks such as VQA (Visual Question Answering), video summarization and video retrieval.
+\end{itemize} 
+
+

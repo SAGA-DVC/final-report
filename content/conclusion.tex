@@ -1,0 +1,13 @@
+\section{Conclusion}
+
+\par Dense Video Captioning is an extremely complex task that is can be considered as the culmination of various tasks in the field of Computer Vision as well as Natural Language Generation. It has numerous applications in different areas in the upcoming digital age, and so developing a solution for this problem is well motivated.
+
+\par A performant DVC model requires multiple sequential modules, each with millions of parameters and numerous losses. We proposed a novel solution that improves upon the shortcomings of previous works by introducing multiple modalities, employing efficient attention mechanisms with the use of contextual learning and using an end-to-end training paradigm. Multiple modalities lead to richer feature spaces compared to single modality features, while an end-to-end training paradigm promotes inter-task promotion for the proposal generation and captioning tasks. The use of attention mechanisms and transformer architectures for the task of DVC is relatively unexplored, hence we investigate the effectiveness of these for DVC.
+
+\par First, we propose a feature extraction framework to generate temporally sensitive multimodal features using the Video Vision Transformer and Audio Spectrogram Transformer, providing a rich representation space for the model to work with. Along the way, we also evaluate the effectiveness of temporally sensitive features qualitatively and quantitatively.
+
+%TODO DVC Model
+
+\par The challenges we faced during this project mainly stemmed from the huge sizes of video and audio data as well as the large models necessary for processing this data and predicting reasonable proposals and captions. These include high training time, memory constraints, and consequent problems in iterative improvement of our model. 	
+
+\par As a result, we achieve competitive results against previous works over a range of evaluation metrics.
