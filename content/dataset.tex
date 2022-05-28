@@ -1,65 +1,12 @@
-\subsection{Textually Annotated Cooking Scenes (TACoS)}
+\subsection{ActivityNet Captions \cite{krishna2017densecaptioning}}
 
-\par TACoS is a subset of MP-II Composites. It was then processed further to provide coherent textual descriptions for high-quality videos. The TACoS dataset was created by filtering through MP-II Composites and limiting the activities to those that involve the manipulation of cooking ingredients and have at least four videos for the same activity. As a result, TACoS includes 26 fine-grained cooking activities spread across 127 videos. Twenty different textual descriptions were collected for each video. The dataset consists of 11,796 sentences with 17,334 action descriptions. The dataset also allows for the alignment of sentences describing activities by obtaining approximate time stamps for the beginning and end of each activity.
+\par It contains 100k dense natural language descriptions of approximately 20k videos from ActivityNet, totaling 849 hours. Each description contains 13.48 words on average and covers approximately 36 seconds of video. Every video has multiple descriptions, and when combined, these descriptions cover 94.6 percent of the content in the video. Furthermore, the dataset's 10 percent temporal overlap makes it particularly interesting and challenging for studying multiple events that occur at the same time. The dataset consists of 200 action classes with distribution among training, validation and testing as ~50\%, ~25\%, ~25\% respectively. 
+\par Since our method also uses audio as input, there is a need to download all youtube videos for audio extraction. However few videos from the dataset were removed by their creators. The current distribution among training, validation and testing is ~9351, 4626 and 4464 videos respectively.
 
-\subsection{TACoS-MultiLevel}
-
-\par The TACoS corpus was used to collect TACoS-MultiLevel. Three levels of descriptions were collected for each video in the TACoS corpus: (1) a detailed description of the video with no more than 15 sentences per video; (2) a short description with 3-5 sentences per video and (3) a single sentence description of the video. The data is annotated using tuples such as object, activity, tool, source, and target, with a person always serving as the subject.
-
-
-\subsection{Microsoft Video Description (MSVD)}
-
-\par MSVD is made up of 1,970 YouTube clips with human annotated sentences. To avoid bias from lexical choices in the descriptions, the audio is muted in all clips. Furthermore, videos with subtitles or overlaid text were removed during the dataset formulation quality control process. Each video in this dataset is typically between 10 and 25 seconds long and focuses on one activity. The dataset contains multilingual (Chinese, English, German, and so on) human generated descriptions.
-
-
-\subsection{Montreal Video Annotation Dataset (M-VAD)}
-
-\par M-VAD is based on the Descriptive Video Service (DVS) and includes 48,986 video clips from 92 films. Each clip lasts an average of 6.2 seconds, and the total time for the entire dataset is 84.6 hours. There are a total of 55,904 sentences, with only a few clips associated with more than one sentence. The dataset's vocabulary contains approximately 17,609 words (Nouns-9,512, Verbs-2,571, Adjectives-3,560, Adverbs-857). The dataset is divided into 38,949, 4,888, and 5,149 video clips for training, validation, and testing.
-
-
-\subsection{MPII Movie Description Corpus (MPII-MD)}
-
-\par MPII-MD includes transcribed audio descriptions from 94 Hollywood films. These films are divided into 68,337 clips with an average length of 3.9 seconds and 68,375 sentences, for a total of nearly one sentence per clip. Each clip is paired with one sentence taken from the film's script and audio description data. The Audio Descriptions (ADs) were first gathered by retrieving the audio streams from the film using the online services MakeMkV 1 and Subtitle Edit 2. The transcribed texts were then time stamped and aligned with the associated spoken sentences. The total duration of the dataset videos is nearly 73.6 hours, and the vocabulary size is 653,467 words.
-
-\subsection{MSR Video-to-Text (MSR-VTT)}
-
-\par MSR-VTT has a large collection of open domain videos for video captioning tasks. It is made up of 7180 videos divided into 10,000 clips. The clips are divided into 20 distinct categories. The dataset is split into 6513 training videos, 497 validation videos, and 2990 test videos. Each video contains 20 reference captions that have been annotated by AMT employees. This is one of the largest video captioning datasets in terms of the number of clips with multiple associated sentences. This dataset contains audio information in addition to video content, which could be used for multimodal research.
-
-\subsection{ActivityNet Captions}
-
-\par It contains 100k dense natural language descriptions of approximately 20k videos from ActivityNet, totaling 849 hours. Each description contains 13.48 words on average and covers approximately 36 seconds of video. Every video has multiple descriptions, and when combined, these descriptions cover 94.6 percent of the content in the video. Furthermore, the dataset's 10 percent temporal overlap makes it particularly interesting and challenging for studying multiple events that occur at the same time. 
-
-\subsection{ActivityNet Entities}
+\subsection{ActivityNet Entities \cite{zhou2018grounded}}
 
 \par It is the first video dataset with grounding and annotations for entities. This dataset is based on the ActivityNet Captions dataset's training and validation splits, but with different captions. In this dataset, noun phrases (NPs) from video descriptions have been grounded to video frame bounding boxes. The dataset includes 14281 annotated videos, 52k video segments with at least one noun phrase annotated per segment, and 158k annotation-enhanced bounding boxes. The dataset uses a training set of 10,000 captions, similar to ActivityNet Captions. The validation set of ActivityNet Captions, on the other hand, is randomly and evenly divided into ANet-Entities validation (2.5k) and testing (2.5k) sets.
 
-\subsection{YouCook}
-
-\par It is made up of 88 YouTube cooking videos of various people preparing various recipes. Most of the videos have a different background (kitchen / scene). The dataset is divided into six different cooking styles, such as grilling, baking, and so on. The training set for machine learning contains 49 videos, while the test set contains 39 videos. The dataset's object categories include "utensils," "bowls," and "food," among others.
-
-\subsection{YouCook2}
-
-\par The YouCook-II Dataset contains 2000 videos that are evenly distributed across 89 recipes. The cooking videos are sourced from YouTube and include all of the challenges of open domain videos, such as camera position changes, camera motion, and changing backgrounds. The entire dataset has a play time of 175.6 hours and a vocabulary of 2600 words. The videos are further broken down into 3-16 segments per video, with an average of 7.7 segments per video elaborating on procedural steps. The length of each segment ranges from 1 to 264 seconds. Each video lasts an average of 316 seconds and can last up to 600 seconds. The dataset is randomly divided into train, validation, and test sets in the following proportions: 66\%:23\%:10\%.
-
-\subsection{MP-II Cooking}
-
-\par The Cooking dataset from the Max Planck Institute for Informatics (MP-II) consists of 65 fine-grained cooking activities performed by 12 participants while preparing 14 dishes such as fruit salad and cake. Among the 65 cooking activities are "wash hands," "put in bowl," "cut apart," "take out from drawer," and so on. A "background activity" is generated when the person is not in the scene for 30 frames (one second) or is performing an unannotated activity. The dataset contains 44 videos (888,775 frames) with an average length of approximately 600 seconds per clip. The dataset contains a total of 8 hours of video play time and 5,609 annotations.
-
-\subsection{VideoStory}
-
-\par VideoStory is a dataset of 20k social media videos with multi-sentence descriptions. This dataset is intended to address the generation of story narration or description for long videos that cannot be adequately illustrated with a single sentence. Each video is accompanied by at least one paragraph. 4.67 sentences are temporally localised on average per paragraph. The dataset contains 26245 paragraphs and 123k sentences, with an average of 13.32 words per sentence. Each paragraph, on average, covers 96.7 percent of the video content. The dataset has approximately 22\% temporal overlap between co-occurring events. The dataset includes 17908 videos for training, 999 videos for validation, and 1011 videos for testing, as well as a blind test set of 1039 videos.
-
-\subsection{Charades}
-
-\par It has 9848 videos of everyday indoor household activities. Videos are shot in 15 different indoor scenes using only 46 objects and 157 action classes. The dataset includes 66500 annotations that describe 157 actions. It also assigns 41104 labels to each of its 46 object classes. It also includes 27847 descriptions for all of the videos. The videos in the dataset have an average duration of 30 seconds and depict daily life activities. For training and testing purposes, the dataset is divided into 7985 and 1863 videos, respectively.
-
-\subsection{Video Titles in the Wild (VTW)}
-
-\par It has 18100 video clips with an average duration of 1.5 minutes. Each clip is described in a single sentence. However, it incorporates a diverse vocabulary, with one word appearing in no more than two sentences on average across the entire dataset. In addition to the single sentence per video, the dataset includes accompanying descriptions (known as augmented sentences) that describe information not present in the clip's visual content. The dataset is intended for video title generation rather than video content description, but it can also be used for language-level comprehension tasks such as video question answering.
-
-\subsection{Kinetics}
-
-\par It is a collection of large-scale, high-quality datasets of URL links to up to 650,000 video clips that, depending on the dataset version, cover 400/600/700 human action classes. Human-object interactions, such as playing instruments, are included in the videos, as well as human-human interactions, such as shaking hands and hugging. There are at least 400/600/700 video clips in each action class. Each clip is approximately 10 seconds long and human annotated with a single action class.
 
 
 \begin{table}[H]
