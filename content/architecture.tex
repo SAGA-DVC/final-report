@@ -52,10 +52,18 @@ $$\L_{dam} = -\frac{1}{N}\displaystyle\sum\limits_{i=1}^N BCE(g(X_{feat})_i, DAM
 
 \section{Context Mask Module}
 \par Once the decoder predicts the events, we consider only those features of the video that belong to those particular events. For this, we use a differentiable masking network proposed by \cite{endtoend} instead of static masks used by most previous works.
-\par The network is a simple FFN with an output dimension of $N=video sequence length$. It gets as input, normalized center offsets and lengths from the segment head and outputs a differentiable mask with values (near) zero when outside the event segments, and (near) one otherwise. Then, we perform an element-wise product with the \textit{video memory} produced by the encoder and feeds this output to the captioning module.
+\par The network is a simple FFN with an output dimension of $N=video \ sequence \ length$. It gets as input, normalized center offsets and lengths from the segment head and outputs a differentiable mask with values (near) zero when outside the event segments, and (near) one otherwise. Then, we perform an element-wise product with the \textit{video memory} produced by the encoder and feeds this output to the captioning module.
 \par We use the Binary Cross-Entropy loss function between the binary (static) mask made using predicted event boundaries and the differentiable mask.
 
 $$\L_{m} = \textrm{BCE}(\mathit{Bin}(S_{p}, E_{p}), f_{FFN}(S_{p}, E_{p}))$$
+
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=\linewidth]{assets/img/architecture-2.jpeg}
+	\caption{Proposal Generation and Captioning using Context Masking Module} %TODO add description?
+\end{figure}
+
 
 \section{Captioning Module}
 \par We use the transformer decoder proposed by \cite{tfm} along with 300-dimensional GloVe word embeddings pre-trained on 6 billion tokens\cite{glove}. The word embeddings are attended with the \textit{video memory} and output embeddings are fed into a softmax layer over the entire vocabulary to get next-word probabilities.
