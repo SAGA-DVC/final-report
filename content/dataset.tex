@@ -1,11 +1,16 @@
-\subsection{ActivityNet Captions \cite{krishna2017densecaptioning}}
+\subsection{ActivityNet Captions}
 
-\par It contains 100k dense natural language descriptions of approximately 20k videos from ActivityNet, totaling 849 hours. Each description contains 13.48 words on average and covers approximately 36 seconds of video. Every video has multiple descriptions, and when combined, these descriptions cover 94.6 percent of the content in the video. Furthermore, the dataset's 10 percent temporal overlap makes it particularly interesting and challenging for studying multiple events that occur at the same time. The dataset consists of 200 action classes with distribution among training, validation and testing as ~50\%, ~25\%, ~25\% respectively. 
-\par Since our method also uses audio as input, there is a need to download all youtube videos for audio extraction. However few videos from the dataset were removed by their creators. The current distribution among training, validation and testing is ~9351, 4626 and 4464 videos respectively.
+\par It contains 100k dense natural language descriptions of approximately 20k videos from ActivityNet, totaling 849 hours. Each description contains 13.48 words on average and covers approximately 36 seconds of video. Every video has multiple descriptions, and when combined, these descriptions cover 94.6 percent of the content in the video. Furthermore, the dataset's 10 percent temporal overlap makes it particularly interesting and challenging for studying multiple events that occur at the same time. The dataset consists of 200 action classes with distribution among training, validation and testing as ~50\%, ~25\%, ~25\% respectively.   \cite{krishna2017densecaptioning}
+\par Since our method also uses audio as input, there is a need to download all YouTube videos for audio extraction. However few videos from the dataset were removed by their creators. The current distribution among training, validation and testing is ~9351, 4626 and 4464 videos respectively.
 
-\subsection{ActivityNet Entities \cite{zhou2018grounded}}
 
-\par It is the first video dataset with grounding and annotations for entities. This dataset is based on the ActivityNet Captions dataset's training and validation splits, but with different captions. In this dataset, noun phrases (NPs) from video descriptions have been grounded to video frame bounding boxes. The dataset includes 14281 annotated videos, 52k video segments with at least one noun phrase annotated per segment, and 158k annotation-enhanced bounding boxes. The dataset uses a training set of 10,000 captions, similar to ActivityNet Captions. The validation set of ActivityNet Captions, on the other hand, is randomly and evenly divided into ANet-Entities validation (2.5k) and testing (2.5k) sets.
+\inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,label={Format of ActivityNet Captions dataset},labelposition=bottomline]{javascript}{assets/code/anet-captions.json}
+
+
+
+\subsection{ActivityNet Entities}
+
+\par It is the first video dataset with grounding and annotations for entities. This dataset is based on the ActivityNet Captions dataset's training and validation splits, but with different captions. In this dataset, noun phrases (NPs) from video descriptions have been grounded to video frame bounding boxes. The dataset includes 14281 annotated videos, 52k video segments with at least one noun phrase annotated per segment, and 158k annotation-enhanced bounding boxes. The dataset uses a training set of 10,000 captions, similar to ActivityNet Captions. The validation set of ActivityNet Captions, on the other hand, is randomly and evenly divided into ANet-Entities validation (2.5k) and testing (2.5k) sets \cite{zhou2018grounded}.
 
 
 
