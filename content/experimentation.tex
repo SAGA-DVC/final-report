@@ -1,0 +1,17 @@
+\section{Experimentation and Results}
+\par We show that our model achieves competitive results compared to current \textit{SOTA} models with fewer training epochs and even fewer attention tokens. We utilize multimodal features from ViViT and AST encoders, pretrained using our adapted Temporally Sensitive Pretraining framework. The ActivityNet dataset is used, which is the largest available dataset for the task of Dense Video Captioning.
+
+
+\subsection {Training Details}
+\par We train our model across 4 DGX-A100 GPUs for 70 epochs with an NCCL backend and a batch size of 16 for 60 hours. We use the AdamW optimizer with a learning rate of $10^{-4}$. We also use gradient clipping with a maximum threshold of $0.1$ to avoid exploding gradients. We set the model's embedding dimension to 512, with 6 layers and 8 attention heads for the transformer encoder, decoder and captioning module. Thus, our model has 75M parameters, excluding the feature extraction encoders. 
+\par The smoothing rate $\alpha$ (for caption loss) is set to $0.5$. We initialize all transformer weights using the Xavier initialized distribution \cite{xavier}. We also use $sine$ positional embeddings, adapted for videos by accounting for their duration. We set the number of \textit{event queries} to 20 and the maximum event counter length to 10.
+\par For the deformable attention head, we use 4 feature levels with 4 sampling sampling points per attention head and a 2048-dimensional FFN. We set $\rho$ to 0.5 (utilize only 50\% tokens) and dropout as 0.1.
+\par For calculating the Hungarian loss, we perform a linear combination across all individual losses. Their corresponding coefficients are $\alpha_{l1}=5, \alpha_{giou}=2, \alpha_{event}=2, \alpha_m=3, \alpha_{cap}=1$.
+
+\subsection {Evaluation Metrics}
+\par We use 2 different metric sets to evaluate different aspects of our model.
+\begin{itemize}
+	\item For evaluating the event boundaries, we use Precision and Recall across IoU thresholds at $\left \{0.3, 0.5, 0.7, 0.9 \right\}$ along with an average across all the thresholds. We also calculate the corresponding average F1 score.
+	\item For evaluating the captions, we calculate the BLEU \cite{bleu} scores across 4 thresholds at $\left \{1, 2, 3, 4\right\}$, METEOR \cite{meteor} and CIDEr \cite{cider}, based on the official ActivityNet challenge guidelines. The captions
+\end{itemize}
+
