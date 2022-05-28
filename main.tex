@@ -122,9 +122,10 @@
 
 
 \chapter*{Abstract}
-The task of Dense Video Captioning (DVC), featured in the annual ActivityNet competition, aims to localize the different events in a given video and generate natural language descriptions for each of them. Most literature for this task involves utilizing CNN extracted video features and multiple stages of training. This project aims to utilize multiple modalities, namely audio and video, as opposed to previous single modality approaches, and we propose a model architecture that can be trained end-to-end. We utilize transformer architectures and efficient attention mechanisms for feature extraction, proposal generation as well as for captioning. We report xxxxx performance.
-
-% TODO Improve Abstract
+\par The task of Dense Video Captioning (DVC), featured in the annual ActivityNet competition, aims to localize the different events in a given video and generate natural language descriptions for each of them. Most literature for this task involves utilizing CNN extracted video features and multiple stages of training. 
+\par This project aims to utilize multiple modalities, namely audio and video, as opposed to previous single modality approaches, and we propose a model architecture that can be trained end-to-end by incorporating a differentialble context mask. We utilize the transformer architecture and an efficient attention mechanism for proposal generation. Additionally, we increase the model's efficiency by using a smaller set of tokens from the input sequence in the encoder. Lastly, we use a transformer decoder as the captioning module over traditional RNN-based models used previously.
+\par We also adopt a novel temporally sensitive pretraining strategy for multiple modalities to optimize the feature extractors for the task of dense video captioning. It enhances the features space of the video, allowing the features to differentiate between foreground and background clips, thereby improving the prediction of multiple events across the video. 
+\par  We evaluate our model on 2 sub-tasks, namely, event localization and dense caption generation. We train our model on the ActivityNet dataset, which is the largest dense video captioning dataset consisting of 20k videos from Youtube. We report competitive results against previous CNN and transformer-based models.
 
 
 \tableofcontents

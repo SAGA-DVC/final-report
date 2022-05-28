@@ -14,8 +14,8 @@
 \par For all our losses, we assume $y$ as ground-truth events and $\hat{y}=\left \{ \hat{y_{i}} \right \}_{i=0}^{N}$ as the model predictions, where $N$ is the number of events in a batch.
 
 \subsection{Transformer Encoder}
-\par The transformer encoder consists of a multi-headed self-attention module (which can either follow the deformable or sparse attention paradigms) followed by a feed-forward neural network (FFN). 
-\par The encoder receives as input, multi-scale features $x_{0} \in R^{(N , d)}$ where $d$ is the dimension of the model and for $l$ feature levels, $N = \sum_{i=0}^{l-1}\left \{\frac{n}{i} \right \}$. The output of the encoder $m_{0} \in R^{(N , d)}$ belongs to a richer feature space tailored specifically for event localization and is treated as \textit{video memory} for the decoder. We also add fixed positional embeddings to each feature level of the input to overcome the permutation-invariance of transformers. 
+\par The transformer encoder consists of a deformable, multi-headed self-attention module followed by a feed-forward neural network (FFN). 
+\par The encoder receives as input, multi-scale features $x_{0} \in R^{(N , d)}$ for $l$ feature levels, $N = \sum_{i=0}^{l-1}\left \{\frac{n}{i} \right \}$, where $d$ is the dimension of the model . The output of the encoder $m_{0} \in R^{(N , d)}$ belongs to a richer feature space tailored specifically for event localization and is treated as \textit{video memory} for the decoder. We also add fixed positional embeddings to each feature level of the input to overcome the permutation-invariance of transformers. 
 \par We also use auxiliary loss (discussed in \ref{chapter:aux}) for all layers of the encoder except the last, which is used exclusively as input to the decoder.
 
 \subsection{Transformer Decoder}
@@ -76,6 +76,38 @@ $$\L_{Hungarian}(y, \hat{y}) = \sum_{i=0}^{N}\left [ \alpha_{l1}\L_{l1} + \alpha
 \section{Auxiliary Losses} \label{chapter:aux}
 \par To mitigate the problem of vanishing gradients and aid better learning throughput out the model, we utilize auxiliary losses during training for the transformer encoder, decoder and captioning module. We thus calculate the loss and backpropagate gradients for every layer of the model, just as we do for the final layer. However, we do not calculate the context mask loss as it is too expensive and requires more training time.
 \par \cite{carion2020detr} does not calculate auxiliary loss for the encoder as its tokens are significantly more in number as compared to the decoder's tokens. However, due to sparsification from the decoder attention map, we can calculate the auxiliary loss for each layer in the encoder, but only for the selected tokens. 
+
+\subsection{Gradient Flow}
+
+\par Gradients and its flow is always a issue when dealing with large and complex models. With models based on the DETR \cite{carion2020detr} architecture, vanishing gradients is a problem. As suggested in \ref{chapter:aux}, we use auxiliary loss in the encoder as well. If we adopt the architecutre proposed in \cite{zhu2020deformable}, with no auxiliary loss for the encoder, the gradients through the encoder decrease at a rapid rate which in turn, reduces the rate at which the loss decreases. 
+\par By using sparsification of encoder tokens and auxiliary loss across all layers of the encoder (except the last) as proposed in \cite{roh2021sparse}, the gradients do not vanish and are much more uniform across the entire model.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.55\textwidth}
+		\includegraphics[width=\linewidth]{assets/img/deformable_grad_flow_epoch_1.png}
+	\end{subfigure}%
+	\begin{subfigure}[b]{0.55\textwidth}
+		\includegraphics[width=\linewidth]{assets/img/sparse_grad_flow_epoch_1.png}
+	\end{subfigure}
+	\caption{Gradient flow for epoch 1 (i). Deformable Transformer, (ii). Sparse Transformer}
+	
+	\label{fig:gradientflowepoch1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.55\textwidth}
+		\includegraphics[width=\linewidth]{assets/img/deformable_grad_flow_epoch_8.png}
+	\end{subfigure}%
+	\begin{subfigure}[b]{0.55\textwidth}
+		\includegraphics[width=\linewidth]{assets/img/sparse_grad_flow_epoch_8.png}
+	\end{subfigure}
+	\caption{Gradient flow for epoch 8 (i). Deformable Transformer, (ii). Sparse Transformer}
+	
+	\label{fig:gradientflowepoch8}
+\end{figure}
+
 
 
 
