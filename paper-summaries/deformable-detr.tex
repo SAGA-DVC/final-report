@@ -4,7 +4,7 @@
 
 \subsection{Overview}
 
-\par Zhu \textit{et al} in their 2021 paper titled \textit{Deformable DETR: Deformable Transformers} for End-to-End Object Detection aims to replace the vanilla dense attention, which is the main computational bottleneck in DETR, with a deformable attention module. This can significantly reduce computational costs while also improving convergence.
+\par Zhu \textit{et al} in their 2021 paper titled \textit{Deformable DETR: Deformable Transformers} for End-to-End Object Detection aims to replace the vanilla dense attention, which is the main computational bottleneck in DETR, with a deformable attention module. This can significantly reduce computational costs while also improving convergence \cite{zhu2020deformable}. 
 \par
 
 \subsection{Architecture}
@@ -51,4 +51,4 @@
 	\item Because the proposed deformable attention module is intended to process convolutional feature maps as key elements, the cross-attention module is replaced with the multi-scale deformable attention module, while the self-attention modules remain unaltered.
 \end{itemize}
 \subsection{Conclusion}
-\par Zhu \textit{et al} present Deformable DETR, an efficient and fast-converging end-to-end object detector.  The multi-scale deformable attention modules, which are an efficient attention mechanism in processing image feature maps, are at the core of Deformable DETR.
+\par Zhu \textit{et al} present Deformable DETR \cite{zhu2020deformable}, an efficient and fast-converging end-to-end object detector.  The multi-scale deformable attention modules, which are an efficient attention mechanism in processing image feature maps, are at the core of Deformable DETR.
