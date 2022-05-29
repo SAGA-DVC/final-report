@@ -5,7 +5,7 @@
 \end{figure}
 
 \section{Multimodal Feature Extraction}
-\par Feature extraction is the backbone of our solution to tackle the task of Dense Video Captioning \cite{krishna2017densecaptioning}. A rich feature space would enhance the representational power of the model, thereby leading to more meaningful and accurate event proposals. Most previous works have utilized one modality only (i.e. video) to generate feature vectors as input to the proposal generator. However, audio cues, in conjunction with video frames is a strong event indicator. These events are accompanied with sharp changes in their corresponding audio spectrograms which can be learnt by the model to better determine the precise boundary of events. Thus, we aim to combine features generated using both video and audio. For this, we pre-train our encoders using the Temporally Sensitive Pre-training \cite{alwassel2021tsp} paradigm which is further explained in Chapter \ref{chapter:feat}.
+\par Feature extraction is the backbone of our solution to tackle the task of Dense Video Captioning \cite{krishna2017densecaptioning}. A rich feature space would enhance the representational power of the model, thereby leading to more meaningful and accurate event proposals. Most previous works have utilized one modality only (i.e. video) to generate feature vectors as input to the proposal generator. However, audio cues, in conjunction with video frames, is a strong event indicator. These events are accompanied with sharp changes in their corresponding audio spectrograms which can be learnt by the model to better determine the precise boundary of events. Thus, we aim to combine features generated using both video and audio. For this, we pre-train our encoders using the Temporally Sensitive Pre-training \cite{alwassel2021tsp} paradigm which is further explained in Chapter \ref{chapter:feat}.
 
 
 \section{Proposal Generation}
@@ -20,7 +20,7 @@
 
 \subsection{Transformer Decoder}
 The transformer decoder consists of multi-headed self-attention and cross-attention modules (which can either follow the deformable or sparse attention paradigms) followed by a feed-forward neural network (FFN). The input to the decoder $q_{0} \in R^{(Q , d)}$ consists of $Q$ different embeddings, each representing a particular event in the video. Analogous to \cite{carion2020detr}, these $Q$ embeddings are learnt positional embeddings or \textit{event queries} and are added to the input (similar to the encoder). The decoder attends the \textit{event queries} with the \textit{video memory} and outputs embeddings $z_{0} \in R^{(Q , d)}$.
-\par The output of the decoder is the fed to two prediction heads, namely the \textit{proposal head} and the \textit{event counter}. The \textit{proposal head} is a 3-layer FFN with the GELU activation function and and output dimension of 2, representing the normalized center-offset and length for an event. We calculate 2 losses for event segments, namely the $l1$ loss and the generalized $IoU$ (Intersection over Union) loss, normalized by the number of event segments in the batch.
+\par The output of the decoder is fed to two prediction heads, namely the \textit{proposal head} and the \textit{event counter}. The \textit{proposal head} is a 3-layer FFN with the GELU activation function and an output dimension of 2, representing the normalized center-offset and length for an event. We calculate 2 losses for event segments, namely the $l1$ loss and the generalized $IoU$ (Intersection over Union) loss, normalized by the number of event segments in the batch.
 
 $$\L_{l1} =  \left \| b_{i} - \hat{b_{i}} \right \| \hspace{1cm} \L_{giou} = \frac{\left |C\symbol{92}(A\cup B)   \right |}{\left | C \right |} $$
 
@@ -52,7 +52,7 @@ $$\L_{dam} = -\frac{1}{N}\displaystyle\sum\limits_{i=1}^N BCE(g(X_{feat})_i, DAM
 
 \section{Context Mask Module}
 \par Once the decoder predicts the events, we consider only those features of the video that belong to those particular events. For this, we use a differentiable masking network proposed by \cite{zhou2018end} instead of static masks used by most previous works.
-\par The network is a simple FFN with an output dimension of $N=video\ sequence\ length$. It gets as input, normalized center offsets and lengths from the proposal head and outputs a differentiable mask with values (near) zero when outside the event segments, and (near) one otherwise. Then, we perform an element-wise product with the \textit{video memory} produced by the encoder and feeds this output to the captioning module.
+\par The network is a simple FFN with an output dimension of $N=video\ sequence\ length$. It gets as input, normalized center offsets and lengths from the proposal head and outputs a differentiable mask with values (near) zero when outside the event segments, and (near) one otherwise. Then, we perform an element-wise product with the \textit{video memory} produced by the encoder and feed this output to the captioning module.
 \par We use the Binary Cross-Entropy loss function between the binary (static) mask made using predicted event boundaries and the differentiable mask.
 
 $$\L_{m} = \textrm{BCE}(\mathit{Bin}(S_{p}, E_{p}), f_{FFN}(S_{p}, E_{p}))$$
@@ -74,8 +74,8 @@ $$y _{c}= (1 - \alpha)y_{onehot} + \frac{\alpha}{K} \hspace{1cm} \L_{cap}(y, \ha
 \par where $K$ is the number of label classes, and $\alpha$ is a hyperparameter that determines the amount of smoothing.
 
 \section{Event Set Prediction}
-\par The output of the decoder consists of $Q$ event queries, each of which represents an event in the video with varying levels of confidence. $Q$ can be set based on the task complexities. Tasks such as object detection in images can have much more queries as compared to temporal action localization. The Hungarian matching algorithm \cite{hungarian} is used to suppress incorrectly assigned predicted segments to ground-truth instances when the decoder produces false positives or false negatives. We thus use a one-to-one mapping between the 2 sets and find only those assignments with the least cost (weighted bipartite matching).
-\par We first calculating a cost matrix of each predicted segment against each ground truth segment. This cost is a linear combination of the $l1$ loss and the generalized $IoU$ loss.
+\par The output of the decoder consists of $Q$ event queries, each of which represents an event in the video with varying levels of confidence. $Q$ can be set based on the task complexities. Tasks such as object detection in images can have much more queries as compared to temporal action localization. The Hungarian matching algorithm \cite{hungarian} is used to suppress incorrectly assigned predicted segments to ground-truth instances when the decoder produces false positives or false negatives. We thus use a one-to-one mapping between the two sets and find only those assignments with the least cost (weighted bipartite matching).
+\par We first calculate a cost matrix of each predicted segment against each ground truth segment. This cost is a linear combination of the $l1$ loss and the generalized $IoU$ loss.
 $$ C = \alpha_{l1}\L_{l1}  + \alpha_{giou}\L_{giou}$$
 \par Then, we use the Hungarian algorithm to optimally match predicted and ground truth segments by selecting the mappings with the lowest cost. Finally, we calculate the overall Hungarian loss across all selected segments for backpropagation through the entire model.
 
@@ -87,7 +87,7 @@ $$\L_{Hungarian}(y, \hat{y}) = \sum_{i=0}^{N}\left [ \alpha_{l1}\L_{l1} + \alpha
 
 \subsection{Gradient Flow}
 
-\par Gradients and its flow is always a issue when dealing with large and complex models. With models based on the DETR \cite{carion2020detr} architecture, vanishing gradients is a problem. As suggested in \ref{chapter:aux}, we use auxiliary loss in the encoder as well. If we adopt the architecutre proposed in \cite{zhu2020deformable}, with no auxiliary loss for the encoder, the gradients through the encoder decrease at a rapid rate which in turn, reduces the rate at which the loss decreases. 
+\par Gradients and its flow is always an issue when dealing with large and complex models. With models based on the DETR \cite{carion2020detr} architecture, vanishing gradients is a problem. As suggested in \ref{chapter:aux}, we use auxiliary loss in the encoder as well. If we adopt the architecture proposed in \cite{zhu2020deformable}, with no auxiliary loss for the encoder, the gradients through the encoder decrease at a rapid rate which in turn, reduces the rate at which the loss decreases. 
 \par By using sparsification of encoder tokens and auxiliary loss across all layers of the encoder (except the last) as proposed in \cite{roh2021sparse}, the gradients do not vanish and are much more uniform across the entire model.
 
 \begin{figure}[h]
