@@ -145,9 +145,21 @@
 \tableofcontents
 
 \newpage
-\thispagestyle{empty}
+\begingroup
+\let\cleardoublepage\relax
 \listoffigures
+\endgroup
+
+\begingroup
+\let\cleardoublepage\relax
 \listoftables
+\endgroup
+
+
+
+% \thispagestyle{empty}
+% \listoffigures
+% \listoftables
 
 
 
