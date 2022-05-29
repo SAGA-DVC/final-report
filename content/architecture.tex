@@ -1,7 +1,7 @@
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=\linewidth]{assets/img/architecture-no-bg.jpg}
-	\caption{Proposed model architecture for Dense Video Captioning} %TODO add description?
+	\caption{Our model uses multimodal TSP features (explained in chapter \ref{chapter:feat}) along with fixed sine positional embeddings as input to the encoder. The encoder outputs \textit{video memory} which is fed into the decoder along with a set of $Q$ \textit{event queries}, each representing an event in the video. A proposal head and event counter head then predict the event timestamps and count respectively. These parameters are then fed to the context module to produce a differentiable context mask which in turn is used to mask the multi-scale features of the encoder. These masked features are then sent to the captioning module which predicts captions for each event using GloVe word embeddings.}
 \end{figure}
 
 \section{Multimodal Feature Extraction}
@@ -20,7 +20,7 @@
 
 \subsection{Transformer Decoder}
 The transformer decoder consists of multi-headed self-attention and cross-attention modules (which can either follow the deformable or sparse attention paradigms) followed by a feed-forward neural network (FFN). The input to the decoder $q_{0} \in R^{(Q , d)}$ consists of $Q$ different embeddings, each representing a particular event in the video. Analogous to \cite{carion2020detr}, these $Q$ embeddings are learnt positional embeddings or \textit{event queries} and are added to the input (similar to the encoder). The decoder attends the \textit{event queries} with the \textit{video memory} and outputs embeddings $z_{0} \in R^{(Q , d)}$.
-\par The output of the decoder is the fed to two prediction heads, namely the \textit{segment head} and the \textit{event counter}. The \textit{segment head} is a 3-layer FFN with the GELU activation function and and output dimension of 2, representing the normalized center-offset and length for an event. We calculate 2 losses for event segments, namely the $l1$ loss and the generalized $IoU$ (Intersection over Union) loss, normalized by the number of event segments in the batch.
+\par The output of the decoder is the fed to two prediction heads, namely the \textit{proposal head} and the \textit{event counter}. The \textit{proposal head} is a 3-layer FFN with the GELU activation function and and output dimension of 2, representing the normalized center-offset and length for an event. We calculate 2 losses for event segments, namely the $l1$ loss and the generalized $IoU$ (Intersection over Union) loss, normalized by the number of event segments in the batch.
 
 $$\L_{l1} =  \left \| b_{i} - \hat{b_{i}} \right \| \hspace{1cm} \L_{giou} = \frac{\left |C\symbol{92}(A\cup B)   \right |}{\left | C \right |} $$
 
@@ -52,7 +52,7 @@ $$\L_{dam} = -\frac{1}{N}\displaystyle\sum\limits_{i=1}^N BCE(g(X_{feat})_i, DAM
 
 \section{Context Mask Module}
 \par Once the decoder predicts the events, we consider only those features of the video that belong to those particular events. For this, we use a differentiable masking network proposed by \cite{zhou2018end} instead of static masks used by most previous works.
-\par The network is a simple FFN with an output dimension of $N=video\ sequence\ length$. It gets as input, normalized center offsets and lengths from the segment head and outputs a differentiable mask with values (near) zero when outside the event segments, and (near) one otherwise. Then, we perform an element-wise product with the \textit{video memory} produced by the encoder and feeds this output to the captioning module.
+\par The network is a simple FFN with an output dimension of $N=video\ sequence\ length$. It gets as input, normalized center offsets and lengths from the proposal head and outputs a differentiable mask with values (near) zero when outside the event segments, and (near) one otherwise. Then, we perform an element-wise product with the \textit{video memory} produced by the encoder and feeds this output to the captioning module.
 \par We use the Binary Cross-Entropy loss function between the binary (static) mask made using predicted event boundaries and the differentiable mask.
 
 $$\L_{m} = \textrm{BCE}(\mathit{Bin}(S_{p}, E_{p}), f_{FFN}(S_{p}, E_{p}))$$
@@ -61,7 +61,7 @@ $$\L_{m} = \textrm{BCE}(\mathit{Bin}(S_{p}, E_{p}), f_{FFN}(S_{p}, E_{p}))$$
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=\linewidth]{assets/img/architecture-2.jpeg}
-	\caption{Proposal Generation and Captioning using Context Masking Module} %TODO add description?
+	\caption{This provides a more in-depth view of the proposal generation module. The decoder outputs a set of $Q$ \textit{event queries} which are fed to the proposal head and event counter. The proposal head is an FFN which outputs timestamps $t \in R^{(Q, 2)}$ representing the center offset and length of the events in the video. The event counter is also an FFN that outputs $c \in R^{(Q, max-count)}$ to predict the event count with the highest confidence. We then select the top-k events based on their confidence scores and feed them to the context module along with the \textit{video memory} to output masked features, localized by event timestamps. These features are finally sent to the caption decoder that keeps predicting next-word probabilities until it outputs an \textit{<end-token>}}
 \end{figure}
 
 
