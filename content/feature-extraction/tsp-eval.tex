@@ -1,5 +1,5 @@
 \subsection{Analysis}
-\par Figure \ref{fig:tsp-feats} shows self-similarity plots of $(n, d)$ features without TSP (the left heatmap of each row in each column), and with TSP (the right heatmap of each row in each column) of eight videos (four in each column). The x and y axes are the clip dimensions from $0$ to $n-1$, while the colour of each cell in the heatmaps denotes the cosine similarity of $d$-dimensional vectors corresponding to each cell. The green segments on the axes indicate the ground truth event segments in terms of starting and ending clips, while the green squares on the plot is formed by the intersection of the segments.
+\par Figure \ref{fig:tsp-feats} shows self-similarity plots of $(n, d)$ features without TSP (the left heatmap of each row in each column), and with TSP (the right heatmap of each row in each column) of eight videos (four in each column). The x and y axes are the clip dimensions from $0$ to $n-1$, while the colour of each cell in the heatmaps denotes the cosine similarity of $d$-dimensional vectors corresponding to each cell. The green segments on the axes indicate the ground truth event segments in terms of starting and ending clips, while the green squares on the plot are formed by the intersection of the segments.
 
 \begin{figure}[h]
     \begin{subfigure}[b]{0.45\textwidth}
@@ -14,7 +14,7 @@
 	\label{fig:tsp-feats}
 \end{figure}
 
-\par We can notice that TSP features show greater similarity (closer to 1.0, with a lighter shade) within an event segment (ground truth square) than outside these squares. This indicates that the features is more representative of events. Moreover, for multiple events in a single video, we note that the intersections between distinct event segments also follows the same pattern. This is due to the following: 
+\par We can notice that TSP features show greater similarity (closer to 1.0, with a lighter shade) within an event segment (ground truth square) than outside these squares. This indicates that the features are more representative of events. Moreover, for multiple events in a single video, we note that the intersections between distinct event segments also follow the same pattern. This is due to the following: 
 \begin{itemize}
 	\item TSP trains feature encoders to distinguish between action (foreground) and non-action (background) segments. Hence inter-event intersections follow a similar pattern to intra-event intersections.
 	\item Most videos in the ActivityNet dataset have the same action class across multiple segments in a video, causing inter-event intersections to appear similar in the plots.
