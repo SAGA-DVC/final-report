@@ -7,32 +7,25 @@
 \inputminted[frame=lines,framesep=2mm,baselinestretch=1.2,label={Format of ActivityNet Captions dataset},labelposition=bottomline]{javascript}{assets/code/anet-captions.json}
 
 
-
-\subsection{ActivityNet Entities}
-
-\par It is the first video dataset with grounding and annotations for entities. This dataset is based on the ActivityNet Captions dataset's training and validation splits, but with different captions. In this dataset, noun phrases (NPs) from video descriptions have been grounded to video frame bounding boxes. The dataset includes 14281 annotated videos, 52k video segments with at least one noun phrase annotated per segment, and 158k annotation-enhanced bounding boxes. The dataset uses a training set of 10,000 captions, similar to ActivityNet Captions. The validation set of ActivityNet Captions, on the other hand, is randomly and evenly divided into ANet-Entities validation (2.5k) and testing (2.5k) sets \cite{zhou2018grounded}.
-
-
-
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
 		\hline
-		\textbf{Dataset}                                           & \textbf{Domain} & \textbf{\#classes} & \textbf{\#videos} & \textbf{Avg len} & \textbf{\#clips} & \textbf{\#sent} & \textbf{\#words} & \textbf{vocab} & \textbf{len (hrs)} \\ \hline
-		TACoS                                                      & cooking         & 26                 & 127               & 360 sec          & 7,206            & 18,227          & 146,771          & 28,292         & 15.9               \\ \hline
-		\begin{tabular}[c]{@{}l@{}}TACos\\ Multilevel\end{tabular} & cooking         & 1                  & 185               & 360 sec          & 14,105           & 52,593          & 2,000            & -              & 27.1               \\ \hline
-		MSVD                                                       & open            & 218                & 1970              & 10 sec           & 1,970            & 70,028          & 607,339          & 13,010         & 5.3                \\ \hline
-		M-VAD                                                      & movie           & -                  & 92                & 6.2 sec          & 48,986           & 55,904          & 519,933          & 17,609         & 84.6               \\ \hline
-		MPII-MD                                                    & movie           & -                  & 94                & 3.9 sec          & 68,337           & 68,375          & 653,467          & 24,549         & 73.6               \\ \hline
-		MSR-VTT                                                    & open            & 20                 & 7,180             & 20 sec           & 10,000           & 200,000         & 1,856,523        & 29,316         & 41.2               \\ \hline
-		ActivityNet Captions                                       & open            & -                  & 20,000            & 180 sec          & -                & 100,000         & 1,348,000        & -              & 849.0              \\ \hline
-		ActivityNet Entities                                       & social media    & -                  & 14,281            & 180 sec          & 52k              & -               & -                & -              & -                  \\ \hline
-		YouCook                                                    & cooking         & 6                  & 88                & -                & Nil              & 2,688           & 42,457           & 2,711          & 2.3                \\ \hline
-		YouCook II                                                 & cooking         & 89                 & 2,000             & 316 sec          & 15.4k            & 15.4k           & -                & 2,600          & 176.0              \\ \hline
-		MP-II Cooking                                              & cooking         & 65                 & 44                & 600 sec          & -                & 5,609           & -                & -              & 8.0                \\ \hline
-		VideoStory                                                 & social media    & -                  & 20k               & -                & 123k             & 123k            & -                & -              & 396.0              \\ \hline
-		Charades                                                   & human           & 157                & 9,848             & 30 sec           & -                & 27,847          & -                & -              & 82.01              \\ \hline
-		VTW                                                        & open            & -                  & 18,100            & 90 sec           & -                & 44,613          & -                & -              & 213.2              \\ \hline
-		Kinetics 700                                               & human           & 700                & 6,50,000          & 10 sec           & 700              & -               & -                & -              & 1806               \\ \hline
+		\textbf{Dataset}                                           & \textbf{Domain} & \textbf{\#classes} & \textbf{\#videos} & \textbf{Avg len} & \textbf{\#clips} & \textbf{\#sent} &  \textbf{len (hrs)} \\ \hline
+		TACoS                                                      & cooking         & 26                 & 127               & 360 sec          & 7,206            & 18,227          &  15.9               \\ \hline
+		\begin{tabular}[c]{@{}l@{}}TACos\\ Multilevel\end{tabular} & cooking         & 1                  & 185               & 360 sec          & 14,105           & 52,593                        & 27.1               \\ \hline
+		MSVD                                                       & open            & 218                & 1970              & 10 sec           & 1,970            & 70,028          &  5.3                \\ \hline
+		M-VAD                                                      & movie           & -                  & 92                & 6.2 sec          & 48,986           & 55,904          &  84.6               \\ \hline
+		MPII-MD                                                    & movie           & -                  & 94                & 3.9 sec          & 68,337           & 68,375          &  73.6               \\ \hline
+		MSR-VTT                                                    & open            & 20                 & 7,180             & 20 sec           & 10,000           & 200,000         &  41.2               \\ \hline
+		ActivityNet Captions                                       & open            & -                  & 20,000            & 180 sec          & -                & 100,000         &  849.0              \\ \hline
+		ActivityNet Entities                                       & social media    & -                  & 14,281            & 180 sec          & 52k              & -               &  -                  \\ \hline
+		YouCook                                                    & cooking         & 6                  & 88                & -                & Nil              & 2,688           &  2.3                \\ \hline
+		YouCook II                                                 & cooking         & 89                 & 2,000             & 316 sec          & 15.4k            & 15.4k           &  176.0              \\ \hline
+		MP-II Cooking                                              & cooking         & 65                 & 44                & 600 sec          & -                & 5,609           &  8.0                \\ \hline
+		VideoStory                                                 & social media    & -                  & 20k               & -                & 123k             & 123k            &  396.0              \\ \hline
+		Charades                                                   & human           & 157                & 9,848             & 30 sec           & -                & 27,847          &  82.01              \\ \hline
+		VTW                                                        & open            & -                  & 18,100            & 90 sec           & -                & 44,613          &  213.2              \\ \hline
+		Kinetics 700                                               & human           & 700                & 6,50,000          & 10 sec           & 700              & -               &  1806               \\ \hline
 	\end{tabular}
 
 \centering
